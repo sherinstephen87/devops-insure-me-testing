@@ -32,41 +32,32 @@ public class App {
         options.addArguments("--headless");
         WebDriver driver = new ChromeDriver(options);
 
-        driver.get("https://www.facebook.com");
-
+        //driver.get("https://www.facebook.com");
+        driver.get("http://18.117.122.62:8081/contact.html");
+        
         driver.getTitle();
 
         driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
 
-        WebElement textBox = driver.findElement(By.xpath("/html/body/div[1]/div[1]/div[1]/div/div[3]/div[2]/form/div[2]/div[1]/input"));
-        WebElement submitButton = driver.findElement(By.xpath("/html/body/div[1]/div[1]/div[1]/div/div[3]/div[2]/form/div[2]/div[3]/button"));
+        driver.findElement(By.name("your_name")).sendKeys("Sherin");
+		
+		driver.findElement(By.name("phone_number")).sendKeys("1234567890");
+		
+		driver.findElement(By.name("email_address")).sendKeys("testing@abc.com");
+		
+		driver.findElement(By.name("your_message")).sendKeys("This is amazing");
+		
+		driver.findElement(By.id("my-button")).click();
         
-        try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        textBox.sendKeys("testing4567@gmail.com");
-        
-        try {
-			Thread.sleep(2000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
-        submitButton.click();
-
-        WebElement message = driver.findElement(By.xpath("//div[@class='fsl fwb fcb']"));
-        //message.getText();
-        System.out.println(message.getText());
+		//assert Result
+		String message = driver.findElement(By.id("response")).getText();
+			
+		System.out.println(message);
         
         //Capture Screenshot
         TakesScreenshot scrshot = ((TakesScreenshot)driver);
         File srcFile = scrshot.getScreenshotAs(OutputType.FILE);
-        File destFile = new File("test-report.jpg");
+        File destFile = new File("insure-me-test.jpg");
         try {
 			FileUtils.copyFile(srcFile, destFile);
 		} catch (IOException e) {
